@@ -15,6 +15,9 @@ namespace BrowserTravel.Library.Infraestructure.Data
         }
         public DbSet<Rol> Roles { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Editorial> Editorials{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

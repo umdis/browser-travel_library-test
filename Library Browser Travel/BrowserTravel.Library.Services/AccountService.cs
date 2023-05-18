@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
@@ -9,7 +10,6 @@ using BrowserTravel.Library.Repository.Interfaces;
 using BrowserTravel.Library.Infraestructure.Models;
 using BrowserTravel.Library.Entities.Dto.Auth;
 using BrowserTravel.Library.Entities.Models;
-using System.Linq;
 using BrowserTravel.Library.Services.Interfaces;
 using BrowserTravel.Library.Services.Common;
 
@@ -27,7 +27,7 @@ namespace BrowserTravel.Library.Services
         }
 
         /// <summary>
-        /// 
+        /// Determines the security status of the user in the application.
         /// </summary>
         /// <param name="userSignInDto"></param>
         /// <returns></returns>
@@ -53,10 +53,13 @@ namespace BrowserTravel.Library.Services
             claimsIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
             claimsIdentity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
 
-            user.Roles.ToList().ForEach(rol =>
+            if (user.Roles != null)
             {
-                claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, rol.Name));
-            });
+                user.Roles.ToList().ForEach(rol =>
+                {
+                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, rol.Name));
+                });
+            }
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -72,6 +75,7 @@ namespace BrowserTravel.Library.Services
                 Email = user.Email,
                 Name= user.Name,
                 Id = user.Id,
+                CreateAt= user.CreateAt,
                 Token = tokenHandler.WriteToken(token)
             };
 

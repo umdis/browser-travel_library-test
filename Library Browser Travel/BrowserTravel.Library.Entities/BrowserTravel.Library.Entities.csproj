@@ -5,8 +5,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Folder Include="Models\" />
-		<Folder Include="Dto\" />
 		<Folder Include="Dto\Auth\" />
 	</ItemGroup>
 	<ItemGroup>

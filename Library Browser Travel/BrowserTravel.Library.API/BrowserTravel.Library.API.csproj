@@ -29,7 +29,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Config\" />
-		<Folder Include="Controllers\V1\" />
 		<Folder Include="Filters\" />
 	</ItemGroup>
 </Project>

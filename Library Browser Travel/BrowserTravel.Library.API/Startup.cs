@@ -15,6 +15,7 @@ using BrowserTravel.Library.Repository.Repositories;
 using BrowserTravel.Library.Services.Interfaces;
 using BrowserTravel.Library.Services;
 using Microsoft.EntityFrameworkCore;
+using BrowserTravel.Library.Services.Areas.Library;
 
 namespace BrowserTravel.Library.API
 {
@@ -38,6 +39,9 @@ namespace BrowserTravel.Library.API
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IAccountRepository, AccountRepository>();
+
+            services.AddScoped<IEditorialService, EditorialService>();
+            services.AddScoped<IEdirorialRepository, EditorialRepository>();
 
             // Service of configuration AppSetting file
             var appSettingsSection = Configuration.GetSection("token");

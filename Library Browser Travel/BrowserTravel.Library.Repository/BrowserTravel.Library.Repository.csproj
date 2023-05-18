@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BrowserTravel.Library.Entities\BrowserTravel.Library.Entities.csproj" />
     <ProjectReference Include="..\BrowserTravel.Library.Infraestructure\BrowserTravel.Library.Infraestructure.csproj" />
   </ItemGroup>

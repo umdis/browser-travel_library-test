@@ -1,6 +1,7 @@
 ﻿using BrowserTravel.Library.Entities.Models;
 using BrowserTravel.Library.Infraestructure.Data;
 using BrowserTravel.Library.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,34 +15,39 @@ namespace BrowserTravel.Library.Repository.Repositories
 
         public Repository(ApplicationDbContext context)
         {
-           _context = context ?? throw new ArgumentNullException(nameof(ApplicationDbContext));
+            _context = context ?? throw new ArgumentNullException(nameof(ApplicationDbContext));
         }
 
         public async Task<T> Add(T entity)
         {
-            _context.Add(entity);
+            await _context.Set<T>().AddAsync(entity);
             await _context.SaveChangesAsync();
             return entity;
         }
 
-        public Task<T> Get(int id)
+        public async Task<T> Get(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Set<T>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public Task<IEnumerable<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.Set<T>().AsNoTracking().ToListAsync();
         }
 
-        public Task<bool> Remove(int id)
+        public async Task<bool> Remove(int id)
         {
-            throw new NotImplementedException();
+            var entity = await Get(id);
+            _context.Set<T>().Remove(entity);
+            return (await _context.SaveChangesAsync()) > 0;
         }
 
-        public Task<bool> Update(int id, T entity)
+        public async Task<bool> Update(int id, T entity)
         {
-            throw new NotImplementedException();
+            _context.Set<T>().Update(entity);
+            return (await _context.SaveChangesAsync()) > 0;
         }
-   }
+    }
 }
