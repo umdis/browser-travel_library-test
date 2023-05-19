@@ -16,6 +16,7 @@ using BrowserTravel.Library.Services.Interfaces;
 using BrowserTravel.Library.Services;
 using Microsoft.EntityFrameworkCore;
 using BrowserTravel.Library.Services.Areas.Library;
+using BrowserTravel.Library.API.Config;
 
 namespace BrowserTravel.Library.API
 {
@@ -105,7 +106,7 @@ namespace BrowserTravel.Library.API
             }
 
             app.UseHttpsRedirection();
-
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseRouting();
 
             app.UseAuthentication();

@@ -32,7 +32,7 @@ namespace BrowserTravel.Library.API.Controllers.V1
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            throw new System.Exception("Excepción de prueba");
         }
 
         // POST api/<EditorialsController>
