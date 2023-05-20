@@ -11,7 +11,7 @@ using BrowserTravel.Library.Infraestructure.Models;
 using BrowserTravel.Library.Entities.Dto.Auth;
 using BrowserTravel.Library.Entities.Models;
 using BrowserTravel.Library.Services.Interfaces;
-using BrowserTravel.Library.Services.Common;
+using BrowserTravel.Library.Common.Cryptography;
 
 namespace BrowserTravel.Library.Services
 {
@@ -42,7 +42,7 @@ namespace BrowserTravel.Library.Services
                 return null;
 
             // Compare hash password
-            string sentPassword = CustomUtils.Hash(userSignInDto.Password, user.Salt);
+            string sentPassword = HiddenSecret.Hash(userSignInDto.Password, user.Salt);
             if (!sentPassword.Equals(user.SaltedAndHashedPassword))
                 return null;
 
@@ -52,14 +52,7 @@ namespace BrowserTravel.Library.Services
             ClaimsIdentity claimsIdentity = new ClaimsIdentity();
             claimsIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
             claimsIdentity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
-
-            if (user.Roles != null)
-            {
-                user.Roles.ToList().ForEach(rol =>
-                {
-                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, rol.Name));
-                });
-            }
+            claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, user.Rol.Name));
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

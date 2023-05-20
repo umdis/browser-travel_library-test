@@ -1,8 +1,6 @@
 ﻿using BrowserTravel.Library.Entities.Dto.Library;
-using BrowserTravel.Library.Services.Areas.Library;
 using BrowserTravel.Library.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,36 +10,36 @@ namespace BrowserTravel.Library.API.Controllers.V1
 {
     [Route("api/V1/[controller]")]
     [ApiController]
-    public class EditorialsController : ControllerBase
+    public class AuthorController : ControllerBase
     {
-        private readonly IEditorialService _editorialService;
+        private readonly IAuthorService _authorService;
 
-        public EditorialsController(IEditorialService editorialService)
+        public AuthorController(IAuthorService authorService)
         {
-            _editorialService = editorialService;
+            _authorService = authorService;
         }
 
-        // GET: api/<EditorialsController>
+        // GET: api/<AuthorController>
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            var response = await _editorialService.GetAll();
+            var response = await _authorService.GetAll();
             return Ok(response);
         }
 
-        // GET api/<EditorialsController>/5
+        // GET api/<AuthorController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
-            var response = await _editorialService.Get(id);
+            var response = await _authorService.Get(id);
             return Ok(response);
         }
 
-        // POST api/<EditorialsController>
+        // POST api/<AuthorController>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] EditorialDto editorialDto)
+        public async Task<ActionResult> Post([FromBody] AuthorDto authorDto)
         {
-            var response = await _editorialService.Add(editorialDto);
+            var response = await _authorService.Add(authorDto);
             return Ok(response);
         }
     }

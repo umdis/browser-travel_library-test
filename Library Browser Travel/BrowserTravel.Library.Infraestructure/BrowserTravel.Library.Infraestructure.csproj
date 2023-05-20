@@ -24,6 +24,7 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17" />
   </ItemGroup>
 	<ItemGroup>
+	  <ProjectReference Include="..\BrowserTravel.Library.Common\BrowserTravel.Library.Common.csproj" />
 	  <ProjectReference Include="..\BrowserTravel.Library.Entities\BrowserTravel.Library.Entities.csproj" />
 	</ItemGroup>
 </Project>

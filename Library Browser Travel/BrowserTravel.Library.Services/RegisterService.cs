@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using BrowserTravel.Library.Common.Cryptography;
 using BrowserTravel.Library.Entities.Dto.Auth;
 using BrowserTravel.Library.Entities.Models;
 using BrowserTravel.Library.Repository.Interfaces;
-using BrowserTravel.Library.Services.Common;
 using BrowserTravel.Library.Services.Interfaces;
 
 namespace BrowserTravel.Library.Services
@@ -28,11 +27,12 @@ namespace BrowserTravel.Library.Services
             User user = new User
             {
                 Email = registerDto.Email,
-                Salt = CustomUtils.GenerateSalt(),
-                CreateAt = DateTime.Now
+                Salt = HiddenSecret.GenerateSalt(),
+                CreateAt = DateTime.Now,
+                IdRol = 2
             };
 
-            user.SaltedAndHashedPassword = CustomUtils.Hash(registerDto.Password, user.Salt);
+            user.SaltedAndHashedPassword = HiddenSecret.Hash(registerDto.Password, user.Salt);
             var userResponse = await _userRepository.Add(user);
 
             return new RegisterResponseDto

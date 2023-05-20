@@ -44,6 +44,9 @@ namespace BrowserTravel.Library.API
             services.AddScoped<IEditorialService, EditorialService>();
             services.AddScoped<IEdirorialRepository, EditorialRepository>();
 
+            services.AddScoped<IAuthorService, AuthorService>();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
+
             // Service of configuration AppSetting file
             var appSettingsSection = Configuration.GetSection("token");
             services.Configure<Token>(appSettingsSection);

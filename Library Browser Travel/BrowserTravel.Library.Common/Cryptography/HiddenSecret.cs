@@ -4,12 +4,12 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Web;
 
-namespace BrowserTravel.Library.Services.Common
+namespace BrowserTravel.Library.Common.Cryptography
 {
     /// <summary>
     /// This class contain common methods  used in the API
     /// </summary>
-    public static class CustomUtils
+    public static class HiddenSecret
     {
         /// <summary>
         /// Returns or sets the user's encrypted password

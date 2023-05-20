@@ -1,5 +1,6 @@
 ﻿using BrowserTravel.Library.Entities.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BrowserTravel.Library.Repository.Interfaces
@@ -10,6 +11,6 @@ namespace BrowserTravel.Library.Repository.Interfaces
         Task<bool> Remove(int id);
         Task<bool> Update(int id, T entity);
         Task<T> Get(int id);
-        Task<IEnumerable<T>> GetAll();
+        IQueryable<T> GetAll();
     }
 }

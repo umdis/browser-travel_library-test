@@ -9,5 +9,6 @@ namespace BrowserTravel.Library.Services.Interfaces
     {
         Task<EditorialResponseDto> Add(EditorialDto editorialDto);
         Task<ICollection<EditorialResponseDto>> GetAll();
+        Task<EditorialResponseDto> Get(int id);
     }
 }

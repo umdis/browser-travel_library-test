@@ -4,6 +4,7 @@ using BrowserTravel.Library.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -32,9 +33,9 @@ namespace BrowserTravel.Library.Repository.Repositories
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public IQueryable<T> GetAll()
         {
-            return await _context.Set<T>().AsNoTracking().ToListAsync();
+            return _context.Set<T>().AsNoTracking();
         }
 
         public async Task<bool> Remove(int id)

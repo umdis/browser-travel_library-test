@@ -19,7 +19,12 @@ namespace BrowserTravel.Library.Entities.Models
 
         [Required]
         public string SaltedAndHashedPassword { get; set; }
-        public ICollection<Rol> Roles { get; set; }
+
+        [Required]
+        public int IdRol { get; set; }
+
+        [ForeignKey("IdRol")]
+        public Rol Rol { get; set; }
 
         [Required]
         public DateTime CreateAt { get; set; }

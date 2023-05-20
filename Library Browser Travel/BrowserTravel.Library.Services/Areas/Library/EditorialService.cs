@@ -2,10 +2,10 @@
 using BrowserTravel.Library.Entities.Models;
 using BrowserTravel.Library.Repository.Interfaces;
 using BrowserTravel.Library.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BrowserTravel.Library.Services.Areas.Library
@@ -41,14 +41,28 @@ namespace BrowserTravel.Library.Services.Areas.Library
         }
 
         /// <summary>
+        /// Return o sets an instance of editorial
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>EditorialResponseDto</returns>
+        public async Task<EditorialResponseDto> Get(int id)
+        {
+            var editorial = await _edirorialRepository.Get(id);
+            return new EditorialResponseDto
+            {
+                Name = editorial.Name,
+                Site = editorial.Site
+            };
+        }
+
+        /// <summary>
         /// Returns a collection of editorials
         /// </summary>
         /// <returns></returns>
         public async Task<ICollection<EditorialResponseDto>> GetAll()
         {
-            var editorials = await _edirorialRepository.GetAll();
-
-            return editorials.Select(e => new EditorialResponseDto { Name = e.Name, Site = e.Site }).ToList();
+            var editorials = _edirorialRepository.GetAll();
+            return await editorials.Select(e => new EditorialResponseDto { Name = e.Name, Site = e.Site }).ToListAsync();
         }
     }
 }

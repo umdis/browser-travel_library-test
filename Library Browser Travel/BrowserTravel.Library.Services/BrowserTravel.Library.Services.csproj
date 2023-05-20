@@ -3,10 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Common\" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BrowserTravel.Library.Infraestructure\BrowserTravel.Library.Infraestructure.csproj" />
     <ProjectReference Include="..\BrowserTravel.Library.Repository\BrowserTravel.Library.Repository.csproj" />

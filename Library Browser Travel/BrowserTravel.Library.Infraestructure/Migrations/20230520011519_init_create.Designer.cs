@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrowserTravel.Library.Infraestructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230518164314_add_tables_library")]
-    partial class add_tables_library
+    [Migration("20230520011519_init_create")]
+    partial class init_create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,6 +54,20 @@ namespace BrowserTravel.Library.Infraestructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Authors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            LastName = "Kafka",
+                            Name = "Franz"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            LastName = "Bauman",
+                            Name = "Zygmunt"
+                        });
                 });
 
             modelBuilder.Entity("BrowserTravel.Library.Entities.Models.Book", b =>
@@ -84,6 +98,44 @@ namespace BrowserTravel.Library.Infraestructure.Migrations
                     b.HasIndex("IdEditorial");
 
                     b.ToTable("Books");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ISBN = "9780435910105",
+                            IdEditorial = 1,
+                            NumberPages = 546,
+                            Synopsis = "...",
+                            Title = "African Folktales"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ISBN = "9781906523374",
+                            IdEditorial = 2,
+                            NumberPages = 200,
+                            Synopsis = "...",
+                            Title = "984 by George Orwell"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ISBN = "9780394721170",
+                            IdEditorial = 2,
+                            NumberPages = 105,
+                            Synopsis = "...",
+                            Title = "The Lord of the Rings by J.R.R. Tolkien"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ISBN = "9780813190761",
+                            IdEditorial = 1,
+                            NumberPages = 97,
+                            Synopsis = "...",
+                            Title = "The Kite Runner by Khaled Hosseini"
+                        });
                 });
 
             modelBuilder.Entity("BrowserTravel.Library.Entities.Models.Editorial", b =>
@@ -104,6 +156,20 @@ namespace BrowserTravel.Library.Infraestructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Editorials");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Sol naciente",
+                            Site = "Cali"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Visión objetiva",
+                            Site = "Barranquilla"
+                        });
                 });
 
             modelBuilder.Entity("BrowserTravel.Library.Entities.Models.Rol", b =>
@@ -159,6 +225,9 @@ namespace BrowserTravel.Library.Infraestructure.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
+                    b.Property<int>("IdRol")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -175,22 +244,22 @@ namespace BrowserTravel.Library.Infraestructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdRol");
+
                     b.ToTable("Users");
-                });
 
-            modelBuilder.Entity("RolUser", b =>
-                {
-                    b.Property<int>("RolesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RolesId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("RolUser");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateAt = new DateTime(2023, 5, 19, 20, 15, 18, 717, DateTimeKind.Local).AddTicks(6196),
+                            Email = "admin@email.com",
+                            IdRol = 1,
+                            Name = "Admin user",
+                            Salt = new byte[] { 244, 199, 209, 163, 11, 7, 37, 53, 71, 173, 81, 193, 74, 240, 63, 85 },
+                            SaltedAndHashedPassword = "9MfRowsHJTVHrVHBSvA/VafvSZcEi2mEgxgphaLd1Qd9+r8Q",
+                            State = true
+                        });
                 });
 
             modelBuilder.Entity("AuthorBook", b =>
@@ -219,19 +288,20 @@ namespace BrowserTravel.Library.Infraestructure.Migrations
                     b.Navigation("Editorial");
                 });
 
-            modelBuilder.Entity("RolUser", b =>
+            modelBuilder.Entity("BrowserTravel.Library.Entities.Models.User", b =>
                 {
-                    b.HasOne("BrowserTravel.Library.Entities.Models.Rol", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
+                    b.HasOne("BrowserTravel.Library.Entities.Models.Rol", "Rol")
+                        .WithMany("Users")
+                        .HasForeignKey("IdRol")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BrowserTravel.Library.Entities.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Rol");
+                });
+
+            modelBuilder.Entity("BrowserTravel.Library.Entities.Models.Rol", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

@@ -17,7 +17,7 @@ namespace BrowserTravel.Library.Repository.Repositories
         }
 
         /// <summary>
-        /// 
+        /// Permite la validación de credenciales para el indgreso de usarios
         /// </summary>
         /// <param name="userSignInDto"></param>
         /// <returns></returns>
