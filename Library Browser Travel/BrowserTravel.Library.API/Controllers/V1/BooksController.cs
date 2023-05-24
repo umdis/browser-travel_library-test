@@ -27,6 +27,14 @@ namespace BrowserTravel.Library.API.Controllers.V1
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("Filter")]
+        public async Task<IActionResult> GetFilter([FromQuery] string parameter)
+        {
+            var response = await _bookService.GetAll(parameter);
+            return Ok(response);
+        }
+
         // GET api/<BooksController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)

@@ -100,5 +100,27 @@ namespace BrowserTravel.Library.Services.Areas.Library
                 Title = e.Title
             }).ToListAsync();
         }
+
+        /// <summary>
+        /// Returns a collection of books according to the received parameter
+        /// </summary>
+        /// <returns>ICollection<BookResponseDto></returns>
+        public async Task<ICollection<BookResponseDto>> GetAll(string parameter)
+        {
+            var response = await _bookRepository.GetItems(b => b.Title.StartsWith(parameter), new string[] { "Editorial", "Authors" });
+
+            response.ToList().ForEach(b => b.Authors.ToList().ForEach(a => a.Books = null));
+
+            return response.Select(b => new BookResponseDto
+            {
+                Authors = b.Authors,
+                Editorial = b.Editorial,
+                Id = b.Id,
+                ISBN = b.ISBN,
+                NumberPages = b.NumberPages,
+                Synopsis = b.Synopsis,
+                Title = b.Title
+            }).ToList();
+        }
     }
 }

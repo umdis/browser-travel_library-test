@@ -1,0 +1,63 @@
+﻿@page "/detail-book-page/{Id:int}"
+
+@using BrowserTravel.Library.Entities.Dto.Library;
+@inject IBookService BookService;
+
+<h3>@((book != null) ? book.Title : "")</h3>
+
+<hr />
+
+@if (book != null)
+{
+    <div class="row">
+        <div class="col-md-6">
+            <form class="m-4">
+                <div class="mb-3">
+                    <label for="Title" class="form-label">Título</label>
+                    <input type="text" class="form-control" @bind="book.Title" disabled></input>
+                </div>
+                <div class="mb-3">
+                    <label for="Synopsis" class="form-label">Sinopsis</label>
+                    <textarea class="form-control" rows="6" @bind="book.Synopsis" disabled></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="NumberPages" class="form-label">Número de páginas</label>
+                    <input type="text" class="form-control" @bind="book.NumberPages" disabled></input>
+                </div>
+                <div class="mb-3">
+                    <label for="Authors" class="form-label">Autores</label>
+                    <p>
+                        @foreach (var author in book.Authors)
+                        {
+                            <a href="#">@($"{author.Name} {author.LastName}")</a>
+                            <br />
+                        }
+                    </p>
+                </div>
+                <div class="mb-3">
+                    <label for="Editorial" class="form-label">Editorial</label>
+                    <input type="text" class="form-control" @bind="book.Editorial.Name" disabled></input>
+                </div>
+                <div class="mb-3">
+                    <label for="Site" class="form-label">Lugar</label>
+                    <input type="text" class="form-control" @bind="book.Editorial.Site" disabled></input>
+                </div>
+                <a href="/books" class="btn btn-primary">Volver</a>
+            </form>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private BookResponseDto book;
+    private string searchText = "";
+
+    protected override async Task OnInitializedAsync() => await GetBook();
+
+    private async Task GetBook()
+    {
+        book = await BookService.Get(Id);
+    }
+}

@@ -1,0 +1,39 @@
+﻿@using BrowserTravel.Library.Entities.Dto.Library;
+<div class="col-md-3 mb-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@book.Title</h5>
+            <p class="card-text">
+                @if (book.Synopsis.Length > 30)
+                {
+                    @book.Synopsis.Substring(0, 30)
+                }
+                else
+                {
+                    @book.Synopsis
+                }
+            </p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">ISBN: @book.ISBN</li>
+            <li class="list-group-item">Páginas: @book.NumberPages</li>
+            <li class="list-group-item">
+                Autores:
+                @foreach (var author in book.Authors)
+                {
+                    <a href="#">@($"{author.Name} {author.LastName}")</a>
+                    <br />
+                }
+            </li>
+        </ul>
+        <div class="card-body">
+            <a href="/detail-book-page/@book.Id" class="btn btn-info btn-sm">Ver</a>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public BookResponseDto book { get; set; }
+}

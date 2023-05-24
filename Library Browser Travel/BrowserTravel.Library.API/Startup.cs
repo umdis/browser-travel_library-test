@@ -22,9 +22,12 @@ namespace BrowserTravel.Library.API
 {
     public class Startup
     {
+        private readonly string _corsPolicy;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            _corsPolicy = "CorsPolicy";
         }
 
         public IConfiguration Configuration { get; }
@@ -87,17 +90,17 @@ namespace BrowserTravel.Library.API
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(ValidatorActionFilter));
-            });
+            }); 
+
+
 
             // Service CORS security
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy",
+                options.AddPolicy(_corsPolicy,
                     builder => builder.AllowAnyOrigin()
                         .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials()
-                        .WithExposedHeaders("X-Pagination"));
+                        .AllowAnyHeader());
             });
         }
 
@@ -114,7 +117,7 @@ namespace BrowserTravel.Library.API
             app.UseHttpsRedirection();
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseRouting();
-
+            app.UseCors(_corsPolicy);
             app.UseAuthentication();
             app.UseAuthorization();
 

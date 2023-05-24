@@ -1,0 +1,59 @@
+﻿@page "/books"
+
+@using BrowserTravel.Library.Entities.Dto.Library;
+@inject IBookService BookService;
+
+<div class="container-fluid">
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <h3><a class="navbar-brand">Encuentra tu libro aquí</a></h3>
+            <form class="d-flex" role="search" >
+                <input class="form-control mr-2" @bind="searchText" type="search" placeholder="Buscar..." aria-label="Buscar">
+                <button class="btn btn-outline-success" type="button" @onclick="GetFilterBooks">Buscar</button>
+            </form>
+        </div>
+    </nav>
+</div>
+
+<hr />
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+
+    @if (books == null)
+    {
+        <span>No se han cargado los libros</span>
+    }
+    else
+    {
+        if (books.Count > 0)
+        {
+            foreach (var book in books)
+            {
+                <BookComponent book="book"></BookComponent>
+            }
+        }
+        else
+        {
+            <span>No se encontraron libros</span>
+        }
+    }
+
+</div>
+
+@code {
+
+    private ICollection<BookResponseDto> books;
+    private string searchText = "";
+
+    protected override async Task OnInitializedAsync() => await GetBooks();
+
+    private async Task GetBooks()
+    {
+        books = await BookService.GetAll();
+    }
+
+    private async Task GetFilterBooks()
+    {
+        books = await BookService.GetAll(searchText);
+    }
+}
