@@ -92,8 +92,6 @@ namespace BrowserTravel.Library.API
                 options.Filters.Add(typeof(ValidatorActionFilter));
             }); 
 
-
-
             // Service CORS security
             services.AddCors(options =>
             {

@@ -45,7 +45,6 @@ namespace BrowserTravel.Library.Repository.Repositories
             return first;
         }
 
-
         public IQueryable<T> GetAll()
         {
             return _context.Set<T>().AsNoTracking();

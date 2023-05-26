@@ -69,6 +69,10 @@ namespace BrowserTravel.Library.Services.Areas.Library
         public async Task<BookResponseDto> Get(int id)
         {
             var book = await _bookRepository.Get(b => b.Id == id, new string[] { "Editorial", "Authors" });
+            
+            if(book == null)
+                return null;
+            
             book.Authors.ToList().ForEach(a => a.Books = null);
             return new BookResponseDto
             {

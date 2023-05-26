@@ -51,6 +51,10 @@ namespace BrowserTravel.Library.Services.Areas.Library
         public async Task<AuthorResponseDto> Get(int id)
         {
             var author = await _authorRepository.Get(id);
+
+            if(author == null)
+                return null;
+
             return new AuthorResponseDto
             {
                 Id = author.Id,

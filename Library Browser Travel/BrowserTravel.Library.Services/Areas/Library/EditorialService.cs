@@ -48,6 +48,10 @@ namespace BrowserTravel.Library.Services.Areas.Library
         public async Task<EditorialResponseDto> Get(int id)
         {
             var editorial = await _edirorialRepository.Get(id);
+
+            if (editorial == null)
+                return null;
+
             return new EditorialResponseDto
             {
                 Name = editorial.Name,
